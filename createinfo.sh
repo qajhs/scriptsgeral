@@ -48,3 +48,4 @@ phpinfo();
 ?>" >> $arquivo
 chown $USUARIO $arquivo
 chgrp $USUARIO $arquivo 
+chmod 644 $arquivo
