@@ -1,15 +1,9 @@
 #!/bin/bash
-cinza="\e[90m"
-normal="\e[0m"
-vermelho="\e[31m"
-verde="\e[32m"
-bold="\e[1m"
+cinza="\e[90m",normal="\e[0m",vermelho="\e[31m",verde="\e[32m",bold="\e[1m"
 ##################################
-texto=`echo $1 | tr A-Z a-z| cut -d ":" -f2 | sed 's/\///g'`
+dominio=`echo $1 | tr A-Z a-z| cut -d ":" -f2 | sed 's/\///g'`
 servidor=`echo $2 | tr A-Z a-z`
-dominio=$texto
 ##################################
-
 echo "[Feito por vitor.silveira@endurance.com]"
 if [[ $1 == "" ]]; then
     echo -e "[$vermelho$bold+$normal] Por favor, insira um domínio/subdomínio válido"
@@ -20,7 +14,6 @@ if [[ $2 == "" ]]; then
     exit
 fi
 DIRDom=$(whmapi1 domainuserdata domain=${dominio} | grep documentroot | awk '{print $2}')
-
 arquivo=$DIRDom/info.php
 cat /etc/userdomains| grep ^${dominio} | awk '{print $2}' > /dev/null 2>&1
 if [[ "$?" != "0" ]]; then
@@ -32,11 +25,6 @@ if [[ "$?" != "0" ]]; then
     echo -e "[$vermelho$bold+$normal] Dominio/Sub Dominio nao encontrado"
     exit
 fi
-cat /var/named/${dominio}.db > /dev/null 2>&1
-if [[ "$?" != "0" ]]; then
-    echo -e "[$vermelho$bold+$normal] Dominio$vermelho nao$normal encontrado no servidor ${variavel2}"
-    exit
-fi
 if [[ -f $DIRDom/info.php ]]; then
     echo -e "[$vermelho$bold+$normal] Arquivo já existe"
     exit
@@ -45,7 +33,7 @@ USUARIO=$(cat /etc/userdomains | grep ^${dominio} | awk '{print $2}')
 echo -e "[$verde$bold+$normal] Arquivo info.php criado em$verde$bold $DIRDom/info.php $normal"
 echo "<?php
 phpinfo();
-?>" >> $arquivo
+?>" > $arquivo
 chown $USUARIO $arquivo
 chgrp $USUARIO $arquivo 
 chmod 644 $arquivo
