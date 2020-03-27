@@ -19,6 +19,7 @@ _install() {
                 exit
             fi
         printf "Done!\n"
+        printf "Restart your computer or use:\n- source /etc/bashrc\nEnjoy :)"
         exit
         else
        printf "Not found 'code' command in VS Code APP!\nCheck your VS Code APP\n\nFile:\n/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code\n\nNot FOUND!.\n"
