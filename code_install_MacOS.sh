@@ -1,7 +1,7 @@
 #!/bin/bash
 if [[ $USER != "root" ]]; then
 printf 'First of all, please be sudo.\n\n'
-printf 'Use:\n- sudo su\n- sudo '
+printf "Use 'sudo su' :D\n\n"
 exit
 fi
 
