@@ -113,3 +113,4 @@ case $1 in
   -d ) DETAILED=""; execcode "$2";;
   -dD ) DETAILED=1; execcode "$2";;
   *) echo "[$RED+$NC] Please provide a valid argument"; HELP_USAGE;exit;;
+esac
