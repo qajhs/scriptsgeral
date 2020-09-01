@@ -62,9 +62,9 @@ DISK_USAGE=$(du -sh `cat /etc/passwd | grep ^$DOMAIN_USER | rev | cut -d: -f2 | 
 SUBDOMAINS=$(for i in `cpapi2 --user=$DOMAIN_USER SubDomain listsubdomains | sed 's/ //g' | grep ^domain: | cut -d: -f2`; do echo "   Subdomain: $i"; done)
 ADDON_DOMAINS=$(for i in `cpapi2 --user=$DOMAIN_USER AddonDomain listaddondomains | sed 's/ //g' | grep ^domain: | cut -d: -f2`; do echo "Addon Domain: $i"; done)
 HOSTNAME=$(hostname)
-USAGE_CPU=$(/usr/local/cpanel/bin/dcpumonview | grep $DOMAIN_USER | sed -r -e 's@^<tr bgcolor=#[[:xdigit:]]+><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td></tr>$@\3@' -e 's@^<tr><td>Top Process</td><td>(.*)</td><td colspan=3>(.*)</td></tr>$@\1 - \2@' | grep -v %)
-USAGE_MYSQL=$(/usr/local/cpanel/bin/dcpumonview | grep $DOMAIN_USER | sed -r -e 's@^<tr bgcolor=#[[:xdigit:]]+><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td></tr>$@\5@' -e 's@^<tr><td>Top Process</td><td>(.*)</td><td colspan=3>(.*)</td></tr>$@\1 - \2@' | grep -v %)
-USAGE_MEMORY=$(/usr/local/cpanel/bin/dcpumonview | grep $DOMAIN_USER | sed -r -e 's@^<tr bgcolor=#[[:xdigit:]]+><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td></tr>$@\4@' -e 's@^<tr><td>Top Process</td><td>(.*)</td><td colspan=3>(.*)</td></tr>$@\1 - \2@' | grep -v %)
+USAGE_CPU=$(/usr/local/cpanel/bin/dcpumonview | grep $DOMAIN_USER | sed -r -e 's@^<tr bgcolor=#[[:xdigit:]]+><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td></tr>$@\3@' -e 's@^<tr><td>Top Process</td><td>(.*)</td><td colspan=3>(.*)</td></tr>$@\1 - \2@' | grep -v % | head -1)
+USAGE_MYSQL=$(/usr/local/cpanel/bin/dcpumonview | grep $DOMAIN_USER | sed -r -e 's@^<tr bgcolor=#[[:xdigit:]]+><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td></tr>$@\5@' -e 's@^<tr><td>Top Process</td><td>(.*)</td><td colspan=3>(.*)</td></tr>$@\1 - \2@' | grep -v % | head -1)
+USAGE_MEMORY=$(/usr/local/cpanel/bin/dcpumonview | grep $DOMAIN_USER | sed -r -e 's@^<tr bgcolor=#[[:xdigit:]]+><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td><td>(.*)</td></tr>$@\4@' -e 's@^<tr><td>Top Process</td><td>(.*)</td><td colspan=3>(.*)</td></tr>$@\1 - \2@' | grep -v % | head -1)
 #########################################################
 # Printing everything
 
