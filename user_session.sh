@@ -3,18 +3,19 @@ if [[ -z $1 ]]; then
     printf "Provide a valid user\n\n"
     exit
 fi
-TRUE_USER=$(cat /etc/trueuserowners | cut -d: -f1 | grep $1)
-if [[ -z $TRUE_USER ]]; then
-    printf "Can't locate user '$1' on the server.\n\n"
-    exit
-fi
-
 
 if [[ $1 == "root" ]]; then
     printf "You can also use 'whmlogin', it's already integrated with cPanel servers.\n\n"
     whmapi1 create_user_session user=root service=whostmgrd | grep url: | sed 's/ //g' | sed 's/url:/WHM\ Temp\ URL:\ /'
     printf "\n"
 fi
+
+TRUE_USER=$(cat /etc/trueuserowners | cut -d: -f1 | grep $1)
+if [[ -z $TRUE_USER ]]; then
+    printf "Can't locate user '$1' on the server.\n\n"
+    exit
+fi
+
 # Checking if account is suspended
 SUSP=$(ls -al /var/cpanel/suspended/ | awk '{print $NF}' | sed 1,2d | sed 1d | grep $1)
 
