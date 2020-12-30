@@ -30,8 +30,8 @@ WHITE="\033[1;37m"
 #####################################################
 
 _execution() {
-    CPANEL_ACCTS=$(ls -l /var/cpanel/users | awk '{print $NF}' | sed 1d  |wc -l)
-    CPANEL_ACCTS_NAMES=$(for item in $(ls -l /var/cpanel/users | awk '{print $NF}' | sed 1d); do printf "\t\t- ${CYAN}$item$NC\n"; done)
+    CPANEL_ACCTS=$(cat /etc/trueuserdomains  | cut -d: -f2 | sed 's/ //g' |wc -l)
+    CPANEL_ACCTS_NAMES=$(for item in $(cat /etc/trueuserdomains  | cut -d: -f2 | sed 's/ //g'); do printf "\t\t- ${CYAN}$item$NC\n"; done)
     DISK_LIMIT=$(df -h / | tail -1 | awk '{print $2}')
     DISK_USAGE=$(df -h / | tail -1 | awk '{print $3}')
     DISK_AVAILABLE=$(df -h / | tail -1 | awk '{print $4}')
@@ -58,5 +58,10 @@ Current cPanel License: $CYAN$CPANEL_LICENSE_CHECK$NC | $CYAN$CPANEL_NUMER_MAX$N
        cPanel Accounts: ${CYAN}$CPANEL_ACCTS$NC
 $CPANEL_ACCTS_NAMES
 "
+
 }
+
+
+
+
 _execution
