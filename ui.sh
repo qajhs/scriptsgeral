@@ -1,21 +1,10 @@
 #!/bin/bash
-NC="\033[0m"
-BLACK="\033[0;30m"
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-BROWN="\033[0;33m"
-BLUE="\033[0;34m"
-PURPLE="\033[0;35m"
-CYAN="\033[0;36m"
-LIGHTGREY="\033[0;37m"
-BLACKGREY="\033[1;30m"
-LIGHTRED="\033[1;31m"
-LIGHTGREEN="\033[1;32m"
-YELLOW="\033[1;33m"
-LIGHTBLUE="\033[1;34m"
-LIGHTPURPLE="\033[1;35m"
-LIGHTCYAN="\033[1;36m"
-WHITE="\033[1;37m"
+########################################
+# Domain/User data retrieve.           #
+# Made by Vitor S.                     #
+# Contact: vitorgss@gmail.com          #
+########################################
+
 
 HELP_USAGE() {
 printf "
@@ -33,7 +22,7 @@ Basic usage for ud:
 
 function execcode {
 if [[ -z $1 ]]; then
- printf "[$RED+$NC] Please provide a valid domain\n"
+ printf "[+] Please provide a valid domain\n"
  exit
 fi
 # Variables
@@ -41,7 +30,7 @@ fi
 DOMAIN=$(echo $1 | tr A-Z a-z| cut -d ":" -f2 | sed 's/\///g')
 CHECKING_WHO_OWNS=$(/scripts/whoowns $DOMAIN)
 if [[ -z $CHECKING_WHO_OWNS ]]; then
-   printf "[$RED+$NC] Can't find the domain inside the server.\n"
+   printf "[+] Can't find the domain inside the server.\n"
    exit
 fi
 # Find user
@@ -112,5 +101,5 @@ fi
 case $1 in
   -d ) DETAILED=""; execcode "$2";;
   -dD ) DETAILED=1; execcode "$2";;
-  *) echo "[$RED+$NC] Please provide a valid argument"; HELP_USAGE;exit;;
+  *) echo "[+] Please provide a valid argument"; HELP_USAGE;exit;;
 esac
